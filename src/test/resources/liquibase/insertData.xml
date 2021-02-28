@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <!--Loading of Data-->
+    <changeSet id="loadData" author="sitnikov">
+
+        <!--Loading of Data Paradigm-->
+        <loadData encoding="UTF-8" file="src\test\resources\liquibase\databaseData\paradigm.csv" tableName="Paradigm" separator=";">
+            <column name="nameParadigm" type="STRING"/>
+        </loadData>
+
+        <!--Loading of Data Language-->
+        <loadData encoding="UTF-8" file="src\test\resources\liquibase\databaseData\language.csv" tableName="Language" separator=";">
+            <column name="nameLanguage" type="STRING"/>
+            <column name="nameParadigm" type="STRING"/>
+            <column name="level" type="STRING"/>
+            <column name="type" type="STRING"/>
+        </loadData>
+
+        <!--Loading of Data Realization-->
+        <loadData encoding="UTF-8" file="src\test\resources\liquibase\databaseData\realization.csv" tableName="Realization" separator=";">
+            <column name="nameLanguage" type="STRING"/>
+            <column name="nameRealization" type="STRING"/>
+            <column name="compile" type="STRING"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

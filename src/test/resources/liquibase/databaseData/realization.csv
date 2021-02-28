@@ -1,0 +1,3 @@
+nameLanguage;nameRealization;compile
+Python;Pypy;компелируемый
+Python;Сpython;интерпитируемый

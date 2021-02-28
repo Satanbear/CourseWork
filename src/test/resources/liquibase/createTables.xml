@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="Create/Update tables" author="sitnikov" runOnChange="true">
+
+        <!-- Drop tables if exists -->
+        <!--splitStatements=true разделение sql выражений ;-->
+        <sql splitStatements="true">
+            DROP TABLE IF EXISTS "FootballLeague" CASCADE;
+            DROP TABLE IF EXISTS "FootballClub" CASCADE;
+            DROP TABLE IF EXISTS "Player" CASCADE;
+            DROP TABLE IF EXISTS "Paradigm" CASCADE;
+            DROP TABLE IF EXISTS "Language" CASCADE;
+            DROP TABLE IF EXISTS "Realization" CASCADE;
+        </sql>
+
+        <!-- Create tables -->
+        <createTable tableName="Paradigm">
+            <column name="idParadigm" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="nameParadigm" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="Language">
+            <column name="idLanguage" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nameLanguage" type="varchar(50)">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="nameParadigm" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="level" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="Realization">
+            <column name="idRealization" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="nameLanguage" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nameRealization" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="compile" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!--Add foreign keys-->
+    <changeSet  author="sitnikov"  id="ForeignKey">
+        <addForeignKeyConstraint baseColumnNames="nameParadigm"
+                                 baseTableName="Language"
+                                 constraintName="FK_Paradigm_Language"
+                                 referencedColumnNames="nameParadigm"
+                                 onUpdate="CASCADE"
+                                 referencedTableName="Paradigm"/>
+
+        <addForeignKeyConstraint baseColumnNames="nameLanguage"
+                                 baseTableName="Realization"
+                                 constraintName="FK_Language_Realization"
+                                 referencedColumnNames="nameLanguage"
+                                 onUpdate="CASCADE"
+                                 referencedTableName="Language"/>
+    </changeSet>
+</databaseChangeLog>
